@@ -4,20 +4,28 @@ A smart search enhancement system that expands user queries using both semantic 
 
 📁 Project Structure :
 
-├── .vscode/
-│   └── launch.json
-├── __pycache__/
-│   ├── server.cpython-310.pyc
-│   ├── query_expander.cpython-310.pyc
-│   ├── server.cpython-311.pyc
-│   └── query_expander.cpython-311.pyc
-├── static/
-│   ├── script.js
-│   └── style.css
-├── templates/
-│   └── index.html
-├── query_expander.py
-├── server.py
+.vscode/
+‣ launch.json – VS Code debugger configuration
+
+__pycache__/
+‣ Compiled Python cache files:
+    • server.cpython-310.pyc
+    • server.cpython-311.pyc
+    • query_expander.cpython-310.pyc
+    • query_expander.cpython-311.pyc
+
+static/
+‣ script.js – JavaScript for frontend interactivity
+‣ style.css – Styling for the web interface
+
+templates/
+‣ index.html – Main frontend HTML page
+
+query_expander.py
+‣ Core logic for query expansion using Wikidata, BM25, and semantic models
+
+server.py
+‣ Flask backend to handle query requests and responses
 
 
 ⚙️ How It Works :
