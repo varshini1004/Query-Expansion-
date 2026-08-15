@@ -5,6 +5,7 @@ To watch the demo -
 go through the linkedin post link where i have posted a video showing the preview of the output.
 
 ========================================================================
+
 🔍 Query Expansion System using Wikipedia & Wikidata 
 
 A smart search enhancement system that expands user queries using both semantic embeddings and structured knowledge from Wikidata. It retrieves richer, more relevant Wikipedia documents for improved search experience.
