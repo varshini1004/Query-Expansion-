@@ -80,7 +80,7 @@ server.py
 Add the files and folders according to the file structure given in VScode. create an environment with your project folder and run the code using the syntax given below.
 (the libraries are to be downloaded accordingly)
 
-syntax : python -m uvicorn server:app --reload
+syntax : python server.py
 
 
 🙏 THANK YOU 
