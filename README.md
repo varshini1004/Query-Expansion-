@@ -1,10 +1,6 @@
-To watch the demo -
-
-" https://www.linkedin.com/posts/saivarshinidevalla_ai-queryexpansion-wikidata-ugcPost-7339183164134694915-P1l1/?utm_source=share&utm_medium=member_desktop&rcm=ACoAAEIRIN8BK0rOrPs8FUXk_UBa7dpZVV4iitU "
-
-go through the linkedin post link where i have posted a video showing the preview of the output.
-
-========================================================================
+#Live Demo Link -
+https://query-expansion.onrender.com/
+Note:- hosted on a free tier — first load may take up to a minute
 
 🔍 Query Expansion System using Wikipedia & Wikidata 
 
