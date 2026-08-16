@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
     form.addEventListener("submit", async (e) => {
         e.preventDefault();
         const query = input.value.trim();
-        if (!query) return;
+        if (!query) return; 
 
         loader.style.display = "block";
         resultContainer.innerHTML = "";
