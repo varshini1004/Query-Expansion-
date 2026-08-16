@@ -1,6 +1,8 @@
 #Live Demo Link -
+
 https://query-expansion.onrender.com/
-Note:- hosted on a free tier — first load may take up to a minute
+
+Note:- hosted on a free tier — first load may take up to a minute.
 
 🔍 Query Expansion System using Wikipedia & Wikidata 
 
