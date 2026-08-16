@@ -19,7 +19,7 @@ except:
 
 from rank_bm25 import BM25Okapi
 from sklearn.metrics.pairwise import cosine_similarity
-from transformers import AutoTokenizer, AutoModel
+from transformers import AutoTokenizer
 
 # =========================================================
 # Try importing wikipedia
