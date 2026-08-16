@@ -15,7 +15,7 @@ try:
 except:
     pass
 
-import spacy
+
 import torch
 from rank_bm25 import BM25Okapi
 from sklearn.metrics.pairwise import cosine_similarity
@@ -37,12 +37,6 @@ except ImportError:
 # CONFIGURATION
 # =========================================================
 
-try:
-    nlp = spacy.load("en_core_web_sm")
-except:
-    import subprocess
-    subprocess.run(["python", "-m", "spacy", "download", "en_core_web_sm"])
-    nlp = spacy.load("en_core_web_sm")
 
 MAX_EXPANDED_TERMS = 20
 MIN_SEMANTIC_SCORE = 0.08
@@ -392,7 +386,7 @@ class NeuralExpander:
             query_embed = self.embedder.get_embeddings(query, domain)
 
             term_scores = {}
-            max_candidates = min(30, len(candidates))
+            max_candidates = min(15, len(candidates))
             
             for idx in range(max_candidates):
                 candidate = candidates[idx]
