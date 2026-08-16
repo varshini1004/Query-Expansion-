@@ -16,7 +16,7 @@ except:
     pass
 
 
-import torch
+
 from rank_bm25 import BM25Okapi
 from sklearn.metrics.pairwise import cosine_similarity
 from transformers import AutoTokenizer, AutoModel
@@ -45,17 +45,22 @@ MIN_SEMANTIC_SCORE = 0.08
 # EMBEDDING MODEL
 # =========================================================
 
+import onnxruntime as ort
+from huggingface_hub import hf_hub_download
+import numpy as np
+
 class FastEmbedder:
     def __init__(self):
-        print("Loading embedding model...")
+        print("Loading embedding model (ONNX)...")
         start_time = time.time()
         self.tokenizer = AutoTokenizer.from_pretrained(
             "sentence-transformers/all-MiniLM-L6-v2"
         )
-        self.model = AutoModel.from_pretrained(
-            "sentence-transformers/all-MiniLM-L6-v2"
+        onnx_path = hf_hub_download(
+            repo_id="sentence-transformers/all-MiniLM-L6-v2",
+            filename="onnx/model.onnx"
         )
-        self.model.eval()
+        self.session = ort.InferenceSession(onnx_path, providers=["CPUExecutionProvider"])
         print(f"Embedding model loaded in {time.time() - start_time:.2f}s")
 
     def get_embeddings(self, text, domain=None):
@@ -64,23 +69,21 @@ class FastEmbedder:
         if len(text) > 300:
             text = text[:300]
         encoded = self.tokenizer(
-            text,
-            padding=True,
-            truncation=True,
-            max_length=128,
-            return_tensors="pt"
+            text, padding=True, truncation=True, max_length=128, return_tensors="np"
         )
-        with torch.no_grad():
-            output = self.model(**encoded)
-        embeddings = output.last_hidden_state
-        attention_mask = encoded["attention_mask"]
-        mask = attention_mask.unsqueeze(-1).expand(embeddings.size()).float()
-        summed = torch.sum(embeddings * mask, dim=1)
-        counts = torch.clamp(mask.sum(dim=1), min=1e-9)
-        mean_embedding = summed / counts
-        return mean_embedding.numpy()
+        ort_inputs = {
+            "input_ids": encoded["input_ids"].astype(np.int64),
+            "attention_mask": encoded["attention_mask"].astype(np.int64),
+        }
+        if "token_type_ids" in encoded:
+            ort_inputs["token_type_ids"] = encoded["token_type_ids"].astype(np.int64)
 
-
+        outputs = self.session.run(None, ort_inputs)
+        last_hidden_state = outputs[0]
+        mask = ort_inputs["attention_mask"][..., None].astype(np.float32)
+        summed = (last_hidden_state * mask).sum(axis=1)
+        counts = np.clip(mask.sum(axis=1), 1e-9, None)
+        return summed / counts
 # =========================================================
 # WIKIPEDIA FETCHER - FINAL WORKING VERSION
 # =========================================================
